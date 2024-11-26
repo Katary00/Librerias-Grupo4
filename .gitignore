@@ -1,0 +1,9 @@
+# Ignorar archivos específicos en MiLibreria
+MiLibreria/.vs
+MiLibreria/bin
+MiLibreria/obj
+
+# Ignorar archivos específicos en MiLibreria.Test
+MiLibreria.Test/.vs
+MiLibreria.Test/bin
+MiLibreria.Test/obj
