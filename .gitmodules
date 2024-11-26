@@ -1,0 +1,6 @@
+[submodule "MiLibreria"]
+    path = MiLibreria
+    url = https://github.com/Katary00/MiLibreria.git
+[submodule "MiLibreria.Test"]
+    path = MiLibreria.Test
+    url = https://github.com/Katary00/MiLibreria.Test.git
