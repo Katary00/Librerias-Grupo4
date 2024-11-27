@@ -1,32 +1,62 @@
-name: .NET Build and Test
+name: CI/CD Pipeline for C# App
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          submodules: true  # Inicializa y actualiza los submódulos
+    # Paso 1: Clonar el repositorio
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '8.0.402'  # Asegúrate de usar una versión compatible con .NET 8.0
+    # Paso 2: Configurar .NET Core
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.402'
 
-      - name: Restore dependencies
-        run: dotnet restore
+    # Paso 3: Restaurar dependencias
+    - name: Restore dependencies
+      run: dotnet restore
 
-      - name: Build the project
-        run: dotnet build --configuration Release
+    # Paso 4: Construir el proyecto
+    - name: Build
+      run: dotnet build --no-restore
 
-      - name: Run tests
-        run: dotnet test --configuration Release
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Repetir los pasos previos hasta la construcción
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.402'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Run Tests
+      run: dotnet test --no-restore
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy (Simulated)
+      run: |
+        echo "Packaging the app for deployment"
+        mkdir output
+        cp -r ./bin/Debug/net7.0/* output/
+        zip -r app.zip output/
